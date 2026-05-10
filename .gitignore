@@ -1,0 +1,14 @@
+# backend
+backend/__pycache__/
+backend/*.py[cod]
+backend/.env
+backend/qdrant_storage/
+backend/venv/
+
+# frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env.local
+
+.DS_Store
+Thumbs.db

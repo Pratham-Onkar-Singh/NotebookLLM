@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+python-multipart
+pdfplumber
+langchain
+langchain-openai
+langchain-qdrant
+qdrant-client
+python-dotenv
+pydantic
+langchain-text-splitters
+fastembed
