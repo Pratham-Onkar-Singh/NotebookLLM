@@ -9,5 +9,5 @@ qdrant-client
 python-dotenv
 pydantic
 langchain-text-splitters
-fastembed
+fastembed==0.3.4
 huggingface_hub
