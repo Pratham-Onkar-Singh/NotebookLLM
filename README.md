@@ -10,6 +10,29 @@ This platform allows users to upload PDF and TXT documents and conversationally 
 *   **Async Processing:** Highly concurrent backend handling document ingestion and routing without blocking.
 *   **Responsive UI:** Clean, modern, and mobile-friendly interface.
 
+## 🔬 Advanced RAG Pipeline
+
+Retrieval runs through a configurable multi-stage pipeline (each stage toggleable via env flags to trade speed for accuracy):
+
+1.  **Query Rewriting (SLM):** A small LLM resolves pronouns against chat history and skips retrieval entirely for greetings/thanks.
+2.  **HyDE:** Optionally embeds a hypothetical *answer* instead of the question for closer vector matches.
+3.  **Over-retrieval + Cross-Encoder Re-ranking:** Pulls a wide candidate set, then re-ranks `(query, chunk)` pairs with a cross-encoder for precision.
+4.  **Corrective RAG (LLM Judge):** Grades whether the assembled context can answer the question; drops it if not, avoiding hallucination.
+
+## ⚙️ Environment Variables
+
+Create a `backend/.env` file (see `backend/.env.example`):
+
+| Variable | Required | Purpose |
+|---|---|---|
+| `HUGGINGFACE_API_KEY` | ✅ | Hugging Face Inference API auth |
+| `HUGGINGFACE_MODEL_ID` | ✅ | Chat model to use |
+| `QDRANT_URL` | ✅ | Qdrant Cloud endpoint |
+| `QDRANT_API_KEY` | ✅ | Qdrant Cloud auth |
+| `PORT` | optional | Server port (default 8000) |
+| `ENABLE_QUERY_REWRITE` / `ENABLE_HYDE` / `ENABLE_RERANK` / `ENABLE_LLM_JUDGE` | optional | Toggle pipeline stages |
+| `RETRIEVAL_TOP_K` / `RERANK_TOP_N` / `CHUNK_SIZE` / `CHUNK_OVERLAP` | optional | Retrieval & chunking tuning |
+
 ## 🛠️ Tech Stack
 
 **Frontend**
@@ -22,7 +45,8 @@ This platform allows users to upload PDF and TXT documents and conversationally 
 *   **FastAPI** 
 *   **LangChain** (LLM Orchestration)
 *   **Qdrant** (Vector Database)
-*   **Google Gemini Embeddings** (3072-dimensional vectors)
+*   **Hugging Face Inference API** (LLM generation)
+*   **FastEmbed** — `all-MiniLM-L6-v2` embeddings + cross-encoder re-ranking
 
 ## 📁 Project Structure
 

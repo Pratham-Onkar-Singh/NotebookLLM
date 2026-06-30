@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { UploadCloud, FileText, Send, Trash2, Bot, User, Loader2, Sparkles } from 'lucide-react';
 
-const API_BASE = 'https://notebookllm-0n6y.onrender.com/api/v1';
+const API_BASE = import.meta.env.VITE_API_BASE || 'https://notebookllm-0n6y.onrender.com/api/v1';
 
 export default function App() {
   const [sessionId, setSessionId] = useState(null);
